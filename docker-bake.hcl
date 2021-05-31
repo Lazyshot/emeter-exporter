@@ -21,6 +21,7 @@ target "git-ref" {
 
 target "image" {
   inherits = ["go-version", "git-ref"]
+  tags = ["lazyshot/emeter-exporter:latest"]
 }
 
 target "image-all" {
