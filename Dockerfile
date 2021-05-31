@@ -1,4 +1,9 @@
-FROM golang:1.16 as builder
+# syntax=docker/dockerfile:1.2
+ARG GO_VERSION=1.16
+
+FROM --platform=$BUILDPLATFORM golang:${GO_VERSION}-alpine as builder
+ARG TARGETPLATFORM
+ARG GIT_REF
 WORKDIR /go/src/github.com/lazyshot/emeter-exporter
 COPY . .
 RUN CGO_ENABLED=0 go build -a -installsuffix cgo .
