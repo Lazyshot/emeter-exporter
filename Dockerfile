@@ -8,7 +8,7 @@ COPY . .
 ARG TARGETARCH
 RUN GOARCH=${TARGETARCH} CGO_ENABLED=0 go build -a -installsuffix cgo .
 
-FROM --platform=$BUILDPLATFORM alpine:latest
+FROM --platform=$TARGETARCH alpine:latest
 RUN apk --no-cache add ca-certificates rtl-sdr
 WORKDIR /app
 COPY --from=builder /go/src/github.com/lazyshot/emeter-exporter/emeter-exporter .
