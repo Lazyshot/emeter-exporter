@@ -56,7 +56,11 @@ func main() {
 			_, err := io.ReadFull(rcvr, block)
 			if err != nil {
 				if err == io.EOF {
-					panic(err)
+					// attempt reconnection
+					err = rcvr.Connect(nil)
+					if err != nil {
+						panic(err)
+					}
 				}
 				log.Printf("error reading data block: %v", err)
 				continue
