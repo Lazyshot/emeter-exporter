@@ -5,8 +5,7 @@ FROM golang:${GO_VERSION}-alpine as builder
 ARG GIT_REF
 WORKDIR /go/src/github.com/lazyshot/emeter-exporter
 COPY . .
-ARG TARGETARCH
-RUN GOARCH=${TARGETARCH} CGO_ENABLED=0 go build -a -installsuffix cgo .
+RUN CGO_ENABLED=0 go build -a -installsuffix cgo .
 
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates rtl-sdr
