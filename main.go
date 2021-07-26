@@ -55,6 +55,9 @@ func main() {
 			block := make([]byte, d.Cfg.BlockSize2)
 			_, err := io.ReadFull(rcvr, block)
 			if err != nil {
+				if err == io.EOF {
+					panic(err)
+				}
 				log.Printf("error reading data block: %v", err)
 				continue
 			}
