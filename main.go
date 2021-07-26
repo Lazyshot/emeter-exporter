@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"syscall"
 
+	"github.com/avast/retry-go"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
@@ -39,7 +40,10 @@ func main() {
 
 	d := protocol.NewDecoder()
 	rcvr := new(rtltcp.SDR)
-	err := rcvr.Connect(nil)
+
+	err := retry.Do(func() error {
+		return rcvr.Connect(nil)
+	})
 	if err != nil {
 		panic(err)
 	}
